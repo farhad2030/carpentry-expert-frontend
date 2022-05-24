@@ -61,7 +61,9 @@ const TopNavBar = () => {
           </div>
         </div>
         <div class="navbar-center">
-          <a class="btn btn-ghost normal-case text-xl">Carpentry-expert</a>
+          <Link to="/" class="btn btn-ghost normal-case text-xl">
+            Carpentry-expert
+          </Link>
         </div>
         <div class="navbar-end">
           {user ? (

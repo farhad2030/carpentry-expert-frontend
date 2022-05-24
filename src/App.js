@@ -2,7 +2,9 @@ import { Route, Routes } from "react-router-dom";
 import "./App.css";
 import AdminRequire from "./Authentication/AdminRequire";
 import RequireAuth from "./Authentication/RequireAuth";
+import AllUsers from "./pages/Dashboard/AllUsers";
 import Dashboard from "./pages/Dashboard/Dashboard";
+import MyOrders from "./pages/Dashboard/MyOrders";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
@@ -25,9 +27,17 @@ function App() {
           <Route
             index
             element={
-              <AdminRequire>
-                <Dashboard />
-              </AdminRequire>
+              <RequireAuth>
+                <MyOrders />
+              </RequireAuth>
+            }
+          />
+          <Route
+            path="allUsers"
+            element={
+              <AllUsers>
+                <Login />
+              </AllUsers>
             }
           />
         </Route>
