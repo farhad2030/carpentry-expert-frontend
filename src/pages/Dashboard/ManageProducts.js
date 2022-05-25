@@ -30,7 +30,7 @@ const ManageProducts = () => {
             <tbody>
               {products.map((product, index) => {
                 return (
-                  <tr class="hover">
+                  <tr class="hover" key={product._id}>
                     <th>{index}</th>
                     <th>{product?.name}</th>
                     <th>{product?.description}</th>

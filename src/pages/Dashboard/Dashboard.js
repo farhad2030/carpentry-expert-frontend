@@ -48,10 +48,10 @@ const Dashboard = () => {
           {user && !admin ? (
             <>
               <li>
-                <Link to="/myOrders">My Orders</Link>
+                <Link to="/dashboard/myOrders">My Orders</Link>
               </li>
               <li>
-                <Link to="/myReview">My Review</Link>
+                <Link to="/dashboard/myReview">My Review</Link>
               </li>
             </>
           ) : (
