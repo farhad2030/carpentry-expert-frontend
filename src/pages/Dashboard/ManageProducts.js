@@ -1,4 +1,5 @@
 import React from "react";
+import { useQuery } from "react-query";
 import Loading from "../../sheared/Loading";
 
 const ManageProducts = () => {
@@ -11,7 +12,7 @@ const ManageProducts = () => {
   );
   return (
     <>
-      <div>AllUsers {isLoading ? "loading ... " : products?.length}</div>
+      <div>Manage products {isLoading ? "loading ... " : products?.length}</div>
 
       <div class="overflow-x-auto">
         <table class="table w-full">
