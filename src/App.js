@@ -4,6 +4,7 @@ import AdminRequire from "./Authentication/AdminRequire";
 import RequireAuth from "./Authentication/RequireAuth";
 import AllUsers from "./pages/Dashboard/AllUsers";
 import Dashboard from "./pages/Dashboard/Dashboard";
+import ManageProducts from "./pages/Dashboard/ManageProducts";
 import MyOrders from "./pages/Dashboard/MyOrders";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
@@ -37,6 +38,14 @@ function App() {
             element={
               <AdminRequire>
                 <AllUsers />
+              </AdminRequire>
+            }
+          />
+          <Route
+            path="manageProducts"
+            element={
+              <AdminRequire>
+                <ManageProducts />
               </AdminRequire>
             }
           />

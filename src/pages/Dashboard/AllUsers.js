@@ -1,46 +1,65 @@
 import React from "react";
-
+import { useQuery } from "react-query";
+import Loading from "../../sheared/Loading";
 const AllUsers = () => {
-  return<>
-  
-  <div>AllUsers</div>
+  const {
+    data: products,
+    isLoading,
+    refetch,
+  } = useQuery("products", () =>
+    fetch("http://localhost:5000/users", {
+      method: "GET",
+      headers: {
+        "content-type": "application/json",
+        authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+      })
+  );
+  return (
+    <>
+      <div>AllUsers {isLoading ? "loading ... " : products?.length}</div>
 
-  <div class="overflow-x-auto">
-  <table class="table w-full">
-    <thead>
-      <tr>
-        <th></th>
-        <th>Name</th>
-        <th>Job</th>
-        <th>Favorite Color</th>
-      </tr>
-    </thead>
-    <tbody>
-      
-      <tr>
-        <th>1</th>
-        <td>Cy Ganderton</td>
-        <td>Quality Control Specialist</td>
-        <td>Blue</td>
-      </tr>
-
-      <tr class="hover">
-        <th>2</th>
-        <td>Hart Hagerty</td>
-        <td>Desktop Support Technician</td>
-        <td>Purple</td>
-      </tr>
-   
-      <tr>
-        <th>3</th>
-        <td>Brice Swyre</td>
-        <td>Tax Accountant</td>
-        <td>Red</td>
-      </tr>
-    </tbody>
-  </table>
-</div>
-  </>
+      <div class="overflow-x-auto">
+        <table class="table w-full">
+          <thead>
+            <tr>
+              <th>NO.</th>
+              <th>Product Name</th>
+              <th>Description</th>
+              <th>Quantity</th>
+              <th>Status</th>
+              <th>Shiped</th>
+            </tr>
+          </thead>
+          {!isLoading ? (
+            <tbody>
+              {products.map((product, index) => {
+                return (
+                  <tr class="hover">
+                    <th>{index}</th>
+                    <th>{product?.name}</th>
+                    <th>{product?.description}</th>
+                    <th>{product?.quantity}</th>
+                    <th>{product?.status}</th>
+                    <th>
+                      {" "}
+                      <button class="btn btn-sm">Shiped</button>
+                    </th>
+                  </tr>
+                );
+              })}
+            </tbody>
+          ) : (
+            <Loading />
+          )}
+        </table>
+      </div>
+    </>
+  );
 };
 
 export default AllUsers;
