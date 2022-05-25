@@ -9,6 +9,7 @@ import AllUsers from "./pages/Dashboard/AllUsers";
 import Dashboard from "./pages/Dashboard/Dashboard";
 import ManageProducts from "./pages/Dashboard/ManageProducts";
 import MyOrders from "./pages/Dashboard/MyOrders";
+import MyProfile from "./pages/Dashboard/MyProfile";
 import Home from "./pages/Home/Home";
 import Login from "./pages/Login";
 import Purchase from "./pages/Purchase";
@@ -39,10 +40,9 @@ function App() {
         <Route path="dashboard" element={<Dashboard />}>
           <Route
             index
-            path="myOrders"
             element={
               <RequireAuth>
-                <MyOrders />
+                <MyProfile />
               </RequireAuth>
             }
           />

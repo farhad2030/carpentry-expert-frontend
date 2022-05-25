@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useForm } from "react-hook-form";
 import { useQuery } from "react-query";
-import { useLocation } from "react-router-dom";
+import { Navigate, useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import auth from "../firebase.init";
 import Loading from "../sheared/Loading";
@@ -12,6 +12,8 @@ const Purchase = () => {
   const [user, userLoading, error] = useAuthState(auth);
 
   const [productData, setproductData] = useState({});
+
+  const navigate = useNavigate();
   const location = useLocation();
   console.log(location?.state);
 
@@ -64,6 +66,7 @@ const Purchase = () => {
           toast.success("Product added successfully");
           setloading(false);
           //  reset();
+          navigate("/dashboard/myOrders");
         } else {
           toast.error("Failed to add the product");
           setloading(false);
