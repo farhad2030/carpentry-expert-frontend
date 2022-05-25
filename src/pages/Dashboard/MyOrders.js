@@ -12,7 +12,7 @@ const MyOrders = () => {
     refetch,
   } = useQuery("orders", () =>
     fetch(
-      `http://localhost:5000/orders/${user.email}`,
+      `http://localhost:5000/orders/${user?.email}`,
 
       {
         method: "GET",
@@ -36,7 +36,7 @@ const MyOrders = () => {
               <th>Description</th>
               <th>Quantity</th>
               <th>Status</th>
-              <th>Shiped</th>
+              <th>Payment</th>
             </tr>
           </thead>
           {!isLoading ? (
@@ -51,7 +51,7 @@ const MyOrders = () => {
                     <th>{order?.status}</th>
                     <th>
                       {" "}
-                      <button class="btn btn-sm">Shiped</button>
+                      <button class="btn btn-sm">Make payment</button>
                     </th>
                   </tr>
                 );
