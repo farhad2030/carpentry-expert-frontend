@@ -35,9 +35,9 @@ function App() {
           <Route
             path="allUsers"
             element={
-              <AllUsers>
-                <Login />
-              </AllUsers>
+              <AdminRequire>
+                <AllUsers />
+              </AdminRequire>
             }
           />
         </Route>
