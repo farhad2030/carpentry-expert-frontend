@@ -1,27 +1,77 @@
 import React, { useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useForm } from "react-hook-form";
+import { useQuery } from "react-query";
 import { useLocation } from "react-router-dom";
+import { toast } from "react-toastify";
 import auth from "../firebase.init";
 import Loading from "../sheared/Loading";
 
 const Purchase = () => {
   const [loading, setloading] = useState(false);
   const [user, userLoading, error] = useAuthState(auth);
+
+  const [productData, setproductData] = useState({});
   const location = useLocation();
   console.log(location?.state);
+
+  const {
+    data: product,
+    isLoading,
+    refetch,
+  } = useQuery("product", () =>
+    fetch(`http://localhost:5000/product/${location.state._id}`, {
+      method: "GET",
+      headers: {
+        "content-type": "application/json",
+        authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setproductData(data);
+      })
+  );
+
   const data = location.state;
+
   const {
     register,
     formState: { errors },
     handleSubmit,
     reset,
   } = useForm();
-  const onSubmit = (data) => {
-    console.log(data);
+  const onSubmit = (formData) => {
+    console.log("form data", formData);
+    const order = {
+      email: formData.email,
+      productId: productData._id,
+      orderQuantity: formData.orderQuantity,
+      status: "unpaid",
+    };
+
+    fetch("http://localhost:5000/order", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+        authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+      },
+      body: JSON.stringify(order),
+    })
+      .then((res) => res.json())
+      .then((inserted) => {
+        if (inserted.insertedId) {
+          toast.success("Product added successfully");
+          setloading(false);
+          //  reset();
+        } else {
+          toast.error("Failed to add the product");
+          setloading(false);
+        }
+      });
   };
 
-  if (userLoading || loading) return <Loading />;
+  if (userLoading || loading || isLoading) return <Loading />;
   return (
     <div>
       <form
@@ -32,32 +82,32 @@ const Purchase = () => {
         <input
           value={user?.email}
           {...register("email")}
-          disabled
+          readOnly
           class="input input-bordered w-full my-2"
         />
         <input
           {...register("name")}
           value={data.name}
-          disabled
+          readOnly
           class="input input-bordered w-full my-2"
         />
         <input
           {...register("description")}
-          disabled
+          readOnly
           value={data?.description}
           class="input input-bordered w-full my-2"
         />
         <input
           {...register("quantity")}
           value={`Available quantity : ${data.quantity}`}
-          disabled
+          readOnly
           class="input input-bordered w-full my-2"
         />
 
         <input
           {...register("minOrderQuantity")}
           value={`Minimum order quantity : ${data.minOrderQuantity}`}
-          disabled
+          readOnly
           class="input input-bordered w-full my-2"
         />
         <input
@@ -97,12 +147,12 @@ const Purchase = () => {
               message: "Order quantity  is Required",
             },
             max: {
-              value: ` ${data.quantity}`,
+              value: ` ${productData.quantity}`,
               message: "Not enough quantity",
             },
             min: {
-              value: ` ${data.minOrderQuantity}`,
-              message: "Please or minimun quantity",
+              value: ` ${productData.minOrderQuantity}`,
+              message: "Please order minimun quantity",
             },
           })}
           type="number"
