@@ -11,6 +11,7 @@ import ManageProducts from "./pages/Dashboard/ManageProducts";
 import MyOrders from "./pages/Dashboard/MyOrders";
 import Home from "./pages/Home/Home";
 import Login from "./pages/Login";
+import Purchase from "./pages/Purchase";
 import Register from "./pages/Register";
 import TopNavBar from "./sheared/TopNavBar";
 
@@ -24,6 +25,14 @@ function App() {
           element={
             <RequireAuth>
               <Home />
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="purchase"
+          element={
+            <RequireAuth>
+              <Purchase />
             </RequireAuth>
           }
         />
@@ -45,6 +54,7 @@ function App() {
               </RequireAuth>
             }
           />
+
           <Route
             path="allUsers"
             element={
