@@ -1,6 +1,8 @@
 import React from "react";
 import { useQuery } from "react-query";
+import { toast } from "react-toastify";
 import Loading from "../../sheared/Loading";
+
 const AllUsers = () => {
   const {
     data: users,
@@ -16,6 +18,28 @@ const AllUsers = () => {
     }).then((res) => res.json())
   );
   console.log(users);
+
+  const makeAdminHandeler = (email, role) => {
+    fetch(`http://localhost:5000/user/admin/${email}`, {
+      method: "PUT",
+      headers: {
+        authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+      },
+    })
+      .then((res) => {
+        if (res.status === 403) {
+          toast.error("Failed to Make an admin");
+        }
+        return res.json();
+      })
+      .then((data) => {
+        if (data.modifiedCount > 0) {
+          refetch();
+          toast.success(`Successfully made an admin`);
+        }
+      });
+  };
+
   return (
     <>
       <div>All Users {isLoading ? "loading ... " : users?.length}</div>
@@ -42,7 +66,14 @@ const AllUsers = () => {
                       {user?.role === "admin" ? (
                         "Already addmin"
                       ) : (
-                        <button class="btn btn-sm ">Make admin</button>
+                        <button
+                          class="btn btn-sm "
+                          onClick={() => {
+                            makeAdminHandeler(user?.email, user?.role);
+                          }}
+                        >
+                          Make admin
+                        </button>
                       )}
                     </td>
                   </tr>
