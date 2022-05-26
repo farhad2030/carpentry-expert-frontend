@@ -10,6 +10,19 @@ const Home = () => {
       <ProductsSection />
       <BusinessSummary />
       <ReviewSection />
+      <>
+        <div class="indicator m-10">
+          <div class="indicator-item indicator-bottom">
+            <button class="btn btn-primary">Offer</button>
+          </div>
+          <div class="card border">
+            <div class="card-body">
+              <h2 class="card-title">Big Seal</h2>
+              <p>Every two times of min quantity you get upto 20% discout</p>
+            </div>
+          </div>
+        </div>
+      </>
     </div>
   );
 };
