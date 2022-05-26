@@ -27,13 +27,7 @@ const AddProduct = () => {
       .then((result) => {
         console.log(result);
         const img = result.data.url;
-        const product = {
-          name: data.name,
-          description: data.description,
-          quantity: data.quantity,
-          minOrderQuantity: data.minOrderQuantity,
-          img: img,
-        };
+        const product = { ...data, img: img };
         if (result.success) {
           fetch("http://localhost:5000/products", {
             method: "POST",
@@ -111,12 +105,26 @@ const AddProduct = () => {
             },
           })}
           type="number"
-          placeholder="Available quantity"
+          placeholder="Minimun quantity"
           class="input input-bordered w-full my-2"
         />
         <p className="text-red-400">
           {errors.minOrderQuantity?.type === "required" &&
             errors.minOrderQuantity.message}
+        </p>
+        <input
+          {...register("unitPrice", {
+            required: {
+              value: true,
+              message: "Unit price is  Required",
+            },
+          })}
+          type="number"
+          placeholder="Unit price"
+          class="input input-bordered w-full my-2"
+        />
+        <p className="text-red-400">
+          {errors.unitPrice?.type === "required" && errors.unitPrice.message}
         </p>
         <input
           {...register("image")}

@@ -55,6 +55,7 @@ const Purchase = () => {
       productId: productData._id,
       orderQuantity: formData.orderQuantity,
       status: "unpaid",
+      receiverName: formData.receiverName,
     };
 
     fetch("http://localhost:5000/order", {

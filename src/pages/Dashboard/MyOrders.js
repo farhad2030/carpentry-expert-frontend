@@ -55,8 +55,9 @@ const MyOrders = () => {
         });
     }
   };
+  console.log(orders);
 
-  const editOrder = (order) => {
+  const editOrder = () => {
     seteditModal("edit");
   };
   return (
@@ -64,13 +65,14 @@ const MyOrders = () => {
       <div>My order {isLoading ? "loading ... " : orders?.length}</div>
 
       <div class="overflow-x-auto">
-        <table class="table w-full">
+        <table class="table w-full text-center">
           <thead>
             <tr>
               <th>NO.</th>
               <th>Order id</th>
               <th>Description</th>
-              <th>Quantity</th>
+              <th>Order Quantity</th>
+              <th>Price</th>
               <th>Status</th>
               <th>Action</th>
             </tr>
@@ -84,6 +86,11 @@ const MyOrders = () => {
                     <th>{order?._id}</th>
                     <th>{order?.description}</th>
                     <th>{order?.orderQuantity}</th>
+
+                    <th>
+                      {parseInt(order?.orderQuantity) *
+                        parseInt(order?.unitPrice)}
+                    </th>
                     <th>{order?.status}</th>
                     <th>
                       <button
@@ -144,15 +151,15 @@ const EditOrder = ({ refetch, seteditModal, order }) => {
     handleSubmit,
     reset,
   } = useForm();
-  const onSubmit = (data) => {
+  const onSubmitEdit = (data) => {
     console.log(data);
-    fetch(`http://localhost:5000/order/${order?.id}`, {
+
+    fetch(`http://localhost:5000/order/${order?._id}`, {
       method: "PUT",
       headers: {
         "content-type": "application/json",
         authorization: `Bearer ${localStorage.getItem("accessToken")}`,
       },
-
       body: JSON.stringify(data),
     })
       .then((res) => {
@@ -163,9 +170,13 @@ const EditOrder = ({ refetch, seteditModal, order }) => {
       })
       .then((data) => {
         if (data.modifiedCount > 0) {
+          console.log(data);
+          seteditModal(null);
           toast.success(`Successfully update your order`);
+          refetch();
         }
       });
+    console.log("in edded");
   };
   return (
     <>
@@ -186,7 +197,7 @@ const EditOrder = ({ refetch, seteditModal, order }) => {
             You can change the order quantity {order?.description}
           </h3>
           <p class="py-4">
-            <form onSubmit={handleSubmit(onSubmit)}>
+            <form onSubmit={handleSubmit(onSubmitEdit)}>
               <input
                 defaultValue={order.orderQuantity}
                 {...register("orderQuantity", {
