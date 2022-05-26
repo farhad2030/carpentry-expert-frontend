@@ -80,7 +80,11 @@ const Login = () => {
         </form>
         <div class="divider">OR</div>
         <button class="btn gap-2 mb-4" onClick={googleHandeler}>
-          {gLoading ? <button class="btn loading"></button> : <FcGoogle />}
+          {gLoading ? (
+            <button class="btn btn-square loading"></button>
+          ) : (
+            <FcGoogle />
+          )}
           Login width Google
         </button>
       </div>

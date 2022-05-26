@@ -47,7 +47,18 @@ const ProfileUpdate = ({ propUser }) => {
           {/*  */}
           <form onSubmit={handleSubmit(onSubmit)} className="px-5  ">
             <input
-              defaultValue={propUser?.linkedin}
+              {...register("address")}
+              type="text"
+              placeholder="Type Your Address"
+              class="input input-bordered w-full my-2"
+            />
+            <input
+              {...register("education")}
+              type="text"
+              placeholder="Type Your last education"
+              class="input input-bordered w-full my-2"
+            />
+            <input
               {...register("linkedIn")}
               type="text"
               placeholder="Type Your Linkedin"
@@ -63,12 +74,6 @@ const ProfileUpdate = ({ propUser }) => {
               {...register("facebook")}
               type="text"
               placeholder="Type Your Facebook"
-              class="input input-bordered w-full my-2"
-            />
-            <input
-              {...register("facebook")}
-              type="text"
-              placeholder="Type Your phone"
               class="input input-bordered w-full my-2"
             />
 

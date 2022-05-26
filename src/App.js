@@ -5,6 +5,7 @@ import "./App.css";
 import AdminRequire from "./Authentication/AdminRequire";
 import RequireAuth from "./Authentication/RequireAuth";
 import AddProduct from "./pages/Dashboard/AddProduct";
+import AddReview from "./pages/Dashboard/AddReview";
 import AllUsers from "./pages/Dashboard/AllUsers";
 import Dashboard from "./pages/Dashboard/Dashboard";
 import MakePayment from "./pages/Dashboard/MakePayment";
@@ -39,6 +40,14 @@ function App() {
           }
         />
         <Route
+          path="purchase/:editPurchase"
+          element={
+            <RequireAuth>
+              <Purchase />
+            </RequireAuth>
+          }
+        />
+        <Route
           path="makePayment/:orderId"
           element={
             <RequireAuth>
@@ -60,6 +69,14 @@ function App() {
             element={
               <RequireAuth>
                 <MyOrders />
+              </RequireAuth>
+            }
+          />
+          <Route
+            path="addReview"
+            element={
+              <RequireAuth>
+                <AddReview />
               </RequireAuth>
             }
           />
