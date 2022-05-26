@@ -4,11 +4,13 @@ import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
 import AdminRequire from "./Authentication/AdminRequire";
 import RequireAuth from "./Authentication/RequireAuth";
+import Blog from "./pages/Blog";
 import AddProduct from "./pages/Dashboard/AddProduct";
 import AddReview from "./pages/Dashboard/AddReview";
 import AllUsers from "./pages/Dashboard/AllUsers";
 import Dashboard from "./pages/Dashboard/Dashboard";
 import MakePayment from "./pages/Dashboard/MakePayment";
+import ManageOrder from "./pages/Dashboard/ManageOrder";
 import ManageProducts from "./pages/Dashboard/ManageProducts";
 import MyOrders from "./pages/Dashboard/MyOrders";
 import MyProfile from "./pages/Dashboard/MyProfile";
@@ -90,6 +92,14 @@ function App() {
             }
           />
           <Route
+            path="manageOrder"
+            element={
+              <AdminRequire>
+                <ManageOrder />
+              </AdminRequire>
+            }
+          />
+          <Route
             path="manageProducts"
             element={
               <AdminRequire>
@@ -106,6 +116,7 @@ function App() {
             }
           />
         </Route>
+        <Route path="blog" element={<Blog />} />
         <Route path="login" element={<Login />} />
         <Route path="register" element={<Register />} />
       </Routes>

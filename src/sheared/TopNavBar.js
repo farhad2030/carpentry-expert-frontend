@@ -35,28 +35,11 @@ const TopNavBar = () => {
               class="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52"
             >
               <li>
-                <a>Porfulio</a>
+                <Link to="/portfulio">Portfolio</Link>
               </li>
-              {user ? (
-                <>
-                  <li>
-                    <a> My Orders</a>
-                  </li>
-                  <li>
-                    <a> Add A Review</a>
-                  </li>
-                  <li>
-                    <a>My Profile</a>
-                  </li>
-                  <li>
-                    <a>Make Admin</a>
-                  </li>
-                </>
-              ) : (
-                <li>
-                  <a>My Profile</a>
-                </li>
-              )}
+              <li>
+                <Link to="/blog">Blog</Link>
+              </li>
             </ul>
           </div>
         </div>
