@@ -1,11 +1,14 @@
 import React from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useQuery } from "react-query";
+import { useNavigate } from "react-router-dom";
 import auth from "../../firebase.init";
 import Loading from "../../sheared/Loading";
 
 const MyOrders = () => {
   const [user, loading] = useAuthState(auth);
+  const navigate = useNavigate();
+
   const {
     data: orders,
     isLoading,
@@ -23,6 +26,10 @@ const MyOrders = () => {
       }
     ).then((res) => res.json())
   );
+
+  const navigateMakepayment = (orderId) => {
+    navigate(`/makePayment/${orderId}`);
+  };
   return (
     <>
       <div>My order {isLoading ? "loading ... " : orders?.length}</div>
@@ -51,7 +58,17 @@ const MyOrders = () => {
                     <th>{order?.status}</th>
                     <th>
                       {" "}
-                      <button class="btn btn-sm">Make payment</button>
+                      <button
+                        onClick={() => {
+                          navigateMakepayment(order?._id);
+                        }}
+                        class="btn btn-sm 
+                      
+                      
+                      "
+                      >
+                        Make payment
+                      </button>
                     </th>
                   </tr>
                 );

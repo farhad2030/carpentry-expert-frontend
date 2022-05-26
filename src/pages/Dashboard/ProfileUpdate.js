@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import auth from "../../firebase.init";
 
-const ProfileUpdate = () => {
+const ProfileUpdate = ({ propUser }) => {
   const [user, loading] = useAuthState(auth);
   const {
     register,
@@ -35,6 +35,7 @@ const ProfileUpdate = () => {
         }
       });
     //
+    console.log(propUser);
   };
   return (
     <>
@@ -46,6 +47,7 @@ const ProfileUpdate = () => {
           {/*  */}
           <form onSubmit={handleSubmit(onSubmit)} className="px-5  ">
             <input
+              defaultValue={propUser?.linkedin}
               {...register("linkedIn")}
               type="text"
               placeholder="Type Your Linkedin"
@@ -61,6 +63,12 @@ const ProfileUpdate = () => {
               {...register("facebook")}
               type="text"
               placeholder="Type Your Facebook"
+              class="input input-bordered w-full my-2"
+            />
+            <input
+              {...register("facebook")}
+              type="text"
+              placeholder="Type Your phone"
               class="input input-bordered w-full my-2"
             />
 

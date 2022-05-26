@@ -33,11 +33,15 @@ const MyProfile = () => {
           <h2 class="card-title">{user?.displayName}</h2>
           <h2 class="card-title">Email : {user?.email}</h2>
 
+          {user?.facebook && (
+            <h2 class="card-title">Facebook : {user?.facebook}</h2>
+          )}
+          {user?.github && <h2 class="card-title">Github : {user?.github}</h2>}
           <div class="card-actions justify-end">
             <label for="profileUpdateModal" class="btn modal-button">
               Update prfile
             </label>
-            <ProfileUpdate />
+            <ProfileUpdate propUser={user} />
           </div>
         </div>
       </div>
