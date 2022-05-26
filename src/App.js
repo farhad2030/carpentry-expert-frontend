@@ -14,6 +14,7 @@ import ManageOrder from "./pages/Dashboard/ManageOrder";
 import ManageProducts from "./pages/Dashboard/ManageProducts";
 import MyOrders from "./pages/Dashboard/MyOrders";
 import MyProfile from "./pages/Dashboard/MyProfile";
+import Footer from "./pages/Footer";
 import Home from "./pages/Home/Home";
 import Login from "./pages/Login";
 import Purchase from "./pages/Purchase";
@@ -120,6 +121,7 @@ function App() {
         <Route path="login" element={<Login />} />
         <Route path="register" element={<Register />} />
       </Routes>
+      <Footer />
       <ToastContainer />
     </div>
   );
