@@ -9,7 +9,7 @@ const AllUsers = () => {
     isLoading,
     refetch,
   } = useQuery("users", () =>
-    fetch("http://localhost:5000/users", {
+    fetch(" http://localhost:3000/users", {
       method: "GET",
       headers: {
         "content-type": "application/json",
@@ -20,7 +20,7 @@ const AllUsers = () => {
   console.log(users);
 
   const makeAdminHandeler = (email, role) => {
-    fetch(`http://localhost:5000/user/admin/${email}`, {
+    fetch(` http://localhost:3000/user/admin/${email}`, {
       method: "PUT",
       headers: {
         authorization: `Bearer ${localStorage.getItem("accessToken")}`,
@@ -56,7 +56,7 @@ const AllUsers = () => {
           </thead>
           {!isLoading ? (
             <tbody>
-              {users.map((user, index) => {
+              {users?.map((user, index) => {
                 return (
                   <tr class="hover" key={user._id}>
                     <td>{index + 1}</td>

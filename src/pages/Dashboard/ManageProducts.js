@@ -9,14 +9,14 @@ const ManageProducts = () => {
     isLoading,
     refetch,
   } = useQuery("products", () =>
-    fetch(`http://localhost:5000/products`).then((res) => res.json())
+    fetch(` http://localhost:3000/products`).then((res) => res.json())
   );
 
   const handelProductDelete = (id) => {
     console.log(id);
     const deleteConfirm = window.confirm(`Do you want to delete`);
     if (deleteConfirm) {
-      fetch(`http://localhost:5000/product/${id}`, {
+      fetch(` http://localhost:3000/product/${id}`, {
         method: "DELETE",
         headers: {
           authorization: `Bearer ${localStorage.getItem("accessToken")}`,
@@ -51,7 +51,7 @@ const ManageProducts = () => {
           </thead>
           {!isLoading ? (
             <tbody>
-              {products.map((product, index) => {
+              {products?.map((product, index) => {
                 return (
                   <tr class="hover" key={product._id}>
                     <th>{index}</th>

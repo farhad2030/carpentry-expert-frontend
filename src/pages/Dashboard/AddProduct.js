@@ -29,7 +29,7 @@ const AddProduct = () => {
         const img = result.data.url;
         const product = { ...data, img: img };
         if (result.success) {
-          fetch("http://localhost:5000/products", {
+          fetch(" http://localhost:3000/products", {
             method: "POST",
             headers: {
               "content-type": "application/json",

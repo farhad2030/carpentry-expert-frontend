@@ -1,18 +1,21 @@
 import React, { useState, useEffect } from "react";
 import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
 const CheckoutForm = ({ order }) => {
+  // const order = setOrder;
   const stripe = useStripe();
   const elements = useElements();
   const [cardError, setCardError] = useState("");
   const [success, setSuccess] = useState("");
   const [processing, setProcessing] = useState(false);
   const [transactionId, setTransactionId] = useState("");
+
+  // setclientsecret from intentent response
   const [clientSecret, setClientSecret] = useState("");
 
-  const { _id, price } = order;
+  const price = parseInt(order?.orderQuantity) * parseInt(order?.unitPrice);
 
   useEffect(() => {
-    fetch("https://secret-dusk-46242.herokuapp.com/create-payment-intent", {
+    fetch(" http://localhost:3000/create-payment-intent", {
       method: "POST",
       headers: {
         "content-type": "application/json",
@@ -22,25 +25,32 @@ const CheckoutForm = ({ order }) => {
     })
       .then((res) => res.json())
       .then((data) => {
-        if (data?.clientSecret) {
-          setClientSecret(data.clientSecret);
+        console.log(data);
+        if (data?.ClientSecret) {
+          setClientSecret(data.ClientSecret);
         }
       });
-  }, [price]);
+  }, [order]);
+  // edit
   const handleSubmit = async (event) => {
     event.preventDefault();
 
+    // not read data of from stripe or not find element
     if (!stripe || !elements) {
       return;
     }
 
+    // get card information
     const card = elements.getElement(CardElement);
 
+    // if card is null then return
     if (card === null) {
       return;
     }
 
+    // get card value
     const { error, paymentMethod } = await stripe.createPaymentMethod({
+      // methode for payment to wish
       type: "card",
       card,
     });
@@ -48,14 +58,15 @@ const CheckoutForm = ({ order }) => {
     setCardError(error?.message || "");
     setSuccess("");
     setProcessing(true);
+
     // confirm card payment
     const { paymentIntent, error: intentError } =
       await stripe.confirmCardPayment(clientSecret, {
         payment_method: {
           card: card,
           billing_details: {
-            name: "patientName",
-            email: "patient",
+            name: order.receiveName,
+            email: order.email,
           },
         },
       });
@@ -67,14 +78,16 @@ const CheckoutForm = ({ order }) => {
       setCardError("");
       setTransactionId(paymentIntent.id);
       console.log(paymentIntent);
-      setSuccess("Congrats! Your payment is completed.");
+      setSuccess(" Your payment is completed.");
 
       //store payment on database
       const payment = {
-        appointment: _id,
+        orderId: order._id,
         transactionId: paymentIntent.id,
       };
-      fetch(`https//localhost:5000/booking/${_id}`, {
+      const url = ` http://localhost:3000/order`;
+      console.log(url);
+      fetch(url, {
         method: "PATCH",
         headers: {
           "content-type": "application/json",
@@ -89,6 +102,9 @@ const CheckoutForm = ({ order }) => {
         });
     }
   };
+
+  // console.log(stripe, clientSecret, success);
+
   return (
     <>
       <form onSubmit={handleSubmit}>
@@ -108,6 +124,7 @@ const CheckoutForm = ({ order }) => {
             },
           }}
         />
+
         <button
           className="btn btn-success btn-sm mt-4"
           type="submit"
@@ -122,7 +139,7 @@ const CheckoutForm = ({ order }) => {
           <p>{success} </p>
           <p>
             Your transaction Id:{" "}
-            <span className="text-orange-500 font-bold">{transactionId}</span>{" "}
+            <span className="text-orange-500 font-bold">{transactionId}</span>
           </p>
         </div>
       )}

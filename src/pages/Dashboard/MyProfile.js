@@ -7,7 +7,7 @@ const MyProfile = () => {
   const [user, setuser] = useState();
   const [currentUser, loading] = useAuthState(auth);
   useEffect(() => {
-    fetch(`http://localhost:5000/user/${currentUser?.email}`, {
+    fetch(` http://localhost:3000/user/${currentUser?.email}`, {
       headers: {
         "content-type": "application/json",
         authorization: `Bearer ${localStorage.getItem("accessToken")}`,

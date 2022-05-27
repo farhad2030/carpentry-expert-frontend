@@ -14,7 +14,7 @@ const ProfileUpdate = ({ propUser }) => {
   const onSubmit = (data) => {
     console.log(data);
     //
-    fetch(`http://localhost:5000/profileUpdate/${user?.email}`, {
+    fetch(` http://localhost:3000/profileUpdate/${user?.email}`, {
       method: "PUT",
       headers: {
         "content-type": "application/json",

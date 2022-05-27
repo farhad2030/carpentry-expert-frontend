@@ -27,7 +27,7 @@ const Purchase = () => {
     isLoading,
     refetch,
   } = useQuery("product", () =>
-    fetch(`http://localhost:5000/product/${location.state._id}`, {
+    fetch(` http://localhost:3000/product/${location.state._id}`, {
       method: "GET",
       headers: {
         "content-type": "application/json",
@@ -58,7 +58,7 @@ const Purchase = () => {
       receiverName: formData.receiverName,
     };
 
-    fetch("http://localhost:5000/order", {
+    fetch(" http://localhost:3000/order", {
       method: "POST",
       headers: {
         "content-type": "application/json",

@@ -17,6 +17,7 @@ import MyProfile from "./pages/Dashboard/MyProfile";
 import Footer from "./pages/Footer";
 import Home from "./pages/Home/Home";
 import Login from "./pages/Login";
+import Portfolio from "./pages/Portfolio";
 import Purchase from "./pages/Purchase";
 import Register from "./pages/Register";
 import TopNavBar from "./sheared/TopNavBar";
@@ -26,14 +27,8 @@ function App() {
     <div className="App">
       <TopNavBar />
       <Routes>
-        <Route
-          path="/"
-          element={
-            <RequireAuth>
-              <Home />
-            </RequireAuth>
-          }
-        />
+        <Route path="/" element={<Home />} />
+        <Route path="portfulio" element={<Portfolio />} />
         <Route
           path="purchase"
           element={
@@ -51,7 +46,7 @@ function App() {
           }
         />
         <Route
-          path="makePayment/:orderId"
+          path="makePayment"
           element={
             <RequireAuth>
               <MakePayment />

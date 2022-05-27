@@ -18,28 +18,25 @@ const MyOrders = () => {
     isLoading,
     refetch,
   } = useQuery("orders", () =>
-    fetch(
-      `http://localhost:5000/orders/${user?.email}`,
-
-      {
-        method: "GET",
-        headers: {
-          "content-type": "application/json",
-          authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-        },
-      }
-    ).then((res) => res.json())
+    fetch(` http://localhost:5000/orders/${user?.email}`, {
+      method: "GET",
+      headers: {
+        "content-type": "application/json",
+        authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+      },
+    }).then((res) => res.json())
   );
 
-  const navigateMakepayment = (orderId) => {
-    navigate(`/makePayment/${orderId}`);
+  console.log(orders);
+  const navigateMakepayment = (order) => {
+    navigate(`/makePayment`, { state: { stateOrder: order } });
   };
   const cancelOrder = (order) => {
     const deleteConfirm = window.confirm(
       `Do you want to delete ${order?.name}`
     );
     if (deleteConfirm) {
-      fetch(`http://localhost:5000/order/${order?._id}`, {
+      fetch(`http://localhost:3000/order/${order?._id}`, {
         method: "DELETE",
         headers: {
           authorization: `Bearer ${localStorage.getItem("accessToken")}`,
@@ -79,7 +76,7 @@ const MyOrders = () => {
           </thead>
           {!isLoading ? (
             <tbody>
-              {orders.map((order, index) => {
+              {orders?.map((order, index) => {
                 return (
                   <tr class="hover" key={order._id}>
                     <th>{index}</th>
@@ -93,14 +90,18 @@ const MyOrders = () => {
                     </th>
                     <th>{order?.status}</th>
                     <th>
-                      <button
-                        onClick={() => {
-                          navigateMakepayment(order?._id);
-                        }}
-                        class="btn btn-sm m-2 "
-                      >
-                        Make payment
-                      </button>
+                      {order?.status === "shiped" && "Panding"}
+                      {order?.status === "unpaid" &&
+                        order?.status !== "shiped" && (
+                          <button
+                            onClick={() => {
+                              navigateMakepayment(order);
+                            }}
+                            class="btn btn-sm m-2 "
+                          >
+                            Make payment
+                          </button>
+                        )}
                       {order?.status === "unpaid" && (
                         <>
                           <button
@@ -154,7 +155,7 @@ const EditOrder = ({ refetch, seteditModal, order }) => {
   const onSubmitEdit = (data) => {
     console.log(data);
 
-    fetch(`http://localhost:5000/order/${order?._id}`, {
+    fetch(` http://localhost:3000/order/${order?._id}`, {
       method: "PUT",
       headers: {
         "content-type": "application/json",

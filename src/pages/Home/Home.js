@@ -33,7 +33,7 @@ const HeroSection = () => {
       <div class="hero-overlay bg-opacity-60"></div>
       <div class="hero-content text-center text-neutral-content">
         <div class="max-w-md">
-          <h1 class="mb-5 text-5xl font-bold">Welcom to Carpentry Experts</h1>
+          <h1 class="mb-5 text-5xl font-bold">Welcome to Carpentry Experts</h1>
           <p class="mb-5">
             Our Manutacature Company is one of the most Reriable companey in USA
           </p>

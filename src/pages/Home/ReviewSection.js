@@ -8,14 +8,14 @@ const ReviewSection = () => {
     isLoading,
     refetch,
   } = useQuery("reviews", () =>
-    fetch(`http://localhost:5000/reviews`).then((res) => res.json())
+    fetch(` http://localhost:3000/reviews`).then((res) => res.json())
   );
   if (isLoading) return <Loading />;
   return (
     <div className="m-5 py-5">
       <h1 className="text-2xl m-4  ">Our client Review </h1>
       <div className="grid grid-cols-3 gap-4">
-        {rewiews.map((review) => {
+        {rewiews?.map((review) => {
           return <ReviewCard review={review} />;
         })}
       </div>
